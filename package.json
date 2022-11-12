@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./app/app.ts "
+    "start": "nodemon ./app/app.ts",
+    "commit": "git-cz"
   },
   "author": "",
   "license": "ISC",
@@ -19,5 +20,10 @@
   "devDependencies": {
     "@types/jsonwebtoken": "^8.5.9",
     "@types/node": "^18.11.7"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    }
   }
 }
