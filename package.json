@@ -19,7 +19,8 @@
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^8.5.9",
-    "@types/node": "^18.11.7"
+    "@types/node": "^18.11.7",
+    "cz-customizable": "^7.0.0"
   },
   "config": {
     "commitizen": {
