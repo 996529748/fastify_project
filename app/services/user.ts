@@ -20,7 +20,7 @@ const register = async (data: UserRegisterCredentials): Promise<ResponseInfo<nul
     // 插入一条数据
     await userDataSet.insertOne({
         ...data,
-        _id: `${new ObjectId()}`, // 生成唯一ID
+        userId: `${new ObjectId()}`, // 生成唯一ID
         createTime: new Date().getTime().toString(),
         updateTime: new Date().getTime().toString()
     });
@@ -43,7 +43,7 @@ const login = async (data: UserLoginCredentials): Promise<ResponseInfo<UserInfo 
     //是否存在此用户
     if (user) {
         // 创建 or 更新该用户token
-        const token = await TokenService.updateToken(user._id.toString());
+        const token = await TokenService.updateToken(user.userId.toString());
         // 返回登录用户信息
         return { code: 200, msg: "成功", data: { ...user, token } };
 
@@ -60,7 +60,7 @@ const getUserInfo = async (userId: string): Promise<ResponseInfo<UserInfo>> => {
     const userDataSet = await (await connectMongo()).collection<UserInfo>("users");
 
     //查找当前ID的用户信息
-    const userInfo = await userDataSet.findOne({ _id: userId });
+    const userInfo = await userDataSet.findOne({ userId: userId });
 
     await closeConnect();
 
@@ -82,13 +82,13 @@ const updateUserInfo = async (userId: string, data: OptionalUserRegisterCredenti
 
     //判断是否存在用户
     if (exist.code === 200) {
-        //更新
+        //更新用户信息
         await userDataSet.updateOne(
             {
-                _id: userId
+              userId: userId
             },
             {
-                $set: data
+              $set: data
             }
         );
         await closeConnect();

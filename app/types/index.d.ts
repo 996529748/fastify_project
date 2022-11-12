@@ -7,3 +7,8 @@ interface ResponseInfo<D = any, S = string> {
   msg?: S;
   data?: D;
 }
+
+// 全局配置文件
+interface ConfigType {
+  readonly AssessTokenKey: string;
+}

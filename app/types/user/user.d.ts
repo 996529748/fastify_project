@@ -16,7 +16,7 @@ interface UserLoginCredentials {
 
 // 数据库中存储的用户信息
 interface UserInfo {
-    _id:string;
+    userId:string;
     username:string;
     password:string;
     sex:Sex;

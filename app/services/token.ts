@@ -1,16 +1,17 @@
 import { closeConnect, connectMongo } from "../utils/connect";
 // https://github.com/auth0/node-jsonwebtoken
 import jwt from "jsonwebtoken";
-import { privateKey } from "../config/RSA";
+import { Config } from "../config/index";
 
 //更新token,新用户则新建token
 const updateToken = async (userId: string) => {
-    // 签名-获取新的token
+    // token秘钥生成 -- 获取新的token 
+    // jwt.sign(需要加密的数据，加密密文（越乱越好），expiresIn 有效期)
     const newToken = jwt.sign(
         {
             _id: userId
         },
-        privateKey,
+        Config.AssessTokenKey,
         {
             expiresIn: "1h",
         }
@@ -48,4 +49,16 @@ const updateToken = async (userId: string) => {
 
 }
 
-export { updateToken }
+/** 获取数据库中存储的token信息 */
+const findTokenFromDB =  async (params: TokenSearchParams) => {
+
+  const tokenDataSet = await (await connectMongo()).collection<ConnectToken>('tokens');
+
+  const lib_token = await tokenDataSet.findOne(params);
+
+  await closeConnect();
+
+  return lib_token;
+}
+
+export { updateToken,findTokenFromDB }
