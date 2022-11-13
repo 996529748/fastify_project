@@ -1,6 +1,8 @@
 import fastify from "fastify";
 import { setupBaseRouter } from "./routers/main";
 import { setupUserRouter } from "./routers/user";
+import { setupRolePermissionsRouter } from "./routers/rolePermissions";
+
 // 加载框架并新建实例
 const app = fastify({logger: true})
 
@@ -18,3 +20,5 @@ app.listen({port:9000,host:"0.0.0.0"}, (err, address) => {
 setupBaseRouter(app)
 //用户信息
 setupUserRouter(app)
+//角色权限
+setupRolePermissionsRouter(app)

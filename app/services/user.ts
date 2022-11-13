@@ -21,8 +21,9 @@ const register = async (data: UserRegisterCredentials): Promise<ResponseInfo<nul
     await userDataSet.insertOne({
         ...data,
         userId: `${new ObjectId()}`, // 生成唯一ID
+        role:null,
         createTime: new Date().getTime().toString(),
-        updateTime: new Date().getTime().toString()
+        updateTime: new Date().getTime().toString(),
     });
 
     // 关闭链接

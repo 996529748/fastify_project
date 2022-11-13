@@ -7,6 +7,7 @@ const RequestHeaderToken = 'assess_token';
 const URLWhiteList = [
   { path: "/v1/user/register", methods: "POST" },
   { path: "/v1/user/login", methods: "POST" },
+  { path: "/v1/all/member/:userId", methods: "GET" },
 ].map(item => {
   return { ...item, urlReg: pathToRegexp(item.path) };
 })

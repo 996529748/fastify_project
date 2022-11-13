@@ -16,12 +16,13 @@ interface UserLoginCredentials {
 
 // 数据库中存储的用户信息
 interface UserInfo {
-    userId:string;
-    username:string;
-    password:string;
-    sex:Sex;
-    createTime:string;
-    updateTime:string;
+    userId: string;
+    username: string;
+    password: string;
+    sex: Sex;
+    role: UserRolePermissionsRole;
+    createTime: string;
+    updateTime: string;
 }
 
 // 选项化用户注册凭证

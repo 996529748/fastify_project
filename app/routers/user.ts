@@ -90,7 +90,7 @@ const setupUserRouter = (app:FastifyInstance) => {
     app.put("/v1/user/:userId", async (req, res) => {
 
         const data = req.body as OptionalUserRegisterCredentials;
-        
+
         const result = UserRegisterValidate.validate(data);
         const params = req.params as { userId: string };
         
@@ -102,7 +102,7 @@ const setupUserRouter = (app:FastifyInstance) => {
         const ret = await UserService.updateUserInfo(params.userId, data);
         
         res.status(ret.code).send(ret);
-      });
+    });
 
 }
 
