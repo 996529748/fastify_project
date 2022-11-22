@@ -1,12 +1,11 @@
 import { closeConnect, connectMongo } from "../utils/connect";
 import { getUserInfo } from "./user";
 
-//TODO:当前用户使用管理员ID设置权限时无法识别
 //设置用户权限
 const updateRolePermissions = async(userId:string):Promise<ResponseInfo<UserRolePermissions>>=> {
 
-  const userInfo = getUserInfo(userId)
-  const role = (await userInfo).data?.role
+  const userInfo = await getUserInfo(userId)
+  const role = userInfo.data?.role
 
   //非管理员不可设置用户信息
   if(role !== 'admin'){
@@ -26,15 +25,14 @@ const updateRolePermissions = async(userId:string):Promise<ResponseInfo<UserRole
         userId: userId
       },
       {
-        $set: userInfo
+        $set: userInfo.data
       }
     );
     await closeConnect();
     return { code: 200, msg: "用户角色设置成功！" };
 
   } else {
-
-      return { code: 500, msg: "用户不存在！" };
+    return { code: 500, msg: "用户不存在！" };
   }
   
 }

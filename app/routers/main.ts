@@ -54,7 +54,6 @@ const setupBaseRouter = (app: FastifyInstance) => {
       userId: data._id,
       assess_token: token
     });
-
     //不存在
     if (!lib_token) {
       res.status(401).send({ msg: "token不存在或已过期", code: 401 });

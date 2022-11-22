@@ -21,7 +21,7 @@ const register = async (data: UserRegisterCredentials): Promise<ResponseInfo<nul
     await userDataSet.insertOne({
         ...data,
         userId: `${new ObjectId()}`, // 生成唯一ID
-        role:null,
+        role:data.username === 'admin'?'admin':'',
         createTime: new Date().getTime().toString(),
         updateTime: new Date().getTime().toString(),
     });
@@ -99,4 +99,27 @@ const updateUserInfo = async (userId: string, data: OptionalUserRegisterCredenti
     }
 }
 
-export { register, login, getUserInfo, updateUserInfo };
+//注销、删除用户信息及token
+const deleteUserInfo = async (userId: string):Promise<ResponseInfo<null>> => {
+    
+    const userDataSet = await (await connectMongo()).collection<UserInfo>("users");
+    const tokenDataSet = await (await connectMongo()).collection<ConnectToken>("tokens");
+    //查找当前ID的用户信息
+    const userInfo = await userDataSet.findOne({ userId: userId });
+    const tokenInfo = await tokenDataSet.findOne({ userId: userId });
+    //判断是否存在用户信息
+    if (userInfo && tokenInfo) {
+
+        await userDataSet.deleteOne({ userId: userId })
+        await tokenDataSet.deleteOne({ userId: userId })
+        // 关闭链接
+        closeConnect();
+
+        return { code: 200, msg: "用户已注销！" };
+
+    } else {
+        return { code: 500, msg: "用户信息不存在" };
+    }
+}
+
+export { register, login, getUserInfo, updateUserInfo, deleteUserInfo };

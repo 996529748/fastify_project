@@ -2,6 +2,7 @@ import fastify from "fastify";
 import { setupBaseRouter } from "./routers/main";
 import { setupUserRouter } from "./routers/user";
 import { setupRolePermissionsRouter } from "./routers/rolePermissions";
+import {setupTemplateRouter} from "./routers/template";
 
 // 加载框架并新建实例
 const app = fastify({logger: true})
@@ -22,3 +23,5 @@ setupBaseRouter(app)
 setupUserRouter(app)
 //角色权限
 setupRolePermissionsRouter(app)
+//模板管理
+setupTemplateRouter(app)

@@ -104,6 +104,17 @@ const setupUserRouter = (app:FastifyInstance) => {
         res.status(ret.code).send(ret);
     });
 
+    //用户注销
+    app.delete("/v1/user/cancellation/:userId",async (req, res)=>{
+        //获取用户ID
+        const params = req.params as { userId: string };
+        console.log(params.userId)
+        //操作数据库删除
+        const ret = await UserService.deleteUserInfo(params.userId);
+
+        res.status(ret.code).send(ret);
+    })
+
 }
 
 export { setupUserRouter }
