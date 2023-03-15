@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@fastify/cors": "^8.2.1",
+    "@fastify/multipart": "^7.5.0",
     "fastify": "^4.9.2",
     "joi": "^17.7.0",
     "jsencrypt": "^3.3.1",

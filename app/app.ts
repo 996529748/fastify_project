@@ -1,11 +1,18 @@
 import fastify from "fastify";
+import multipart from "@fastify/multipart";
+import cors from "@fastify/cors";
 import { setupBaseRouter } from "./routers/main";
 import { setupUserRouter } from "./routers/user";
 import { setupRolePermissionsRouter } from "./routers/rolePermissions";
 import {setupTemplateRouter} from "./routers/template";
 
 // 加载框架并新建实例
-const app = fastify({logger: true})
+const app = fastify({logger: true}).register(multipart, {})
+.register(cors, {
+  allowedHeaders: "Content-Type,authorization",
+  origin: "*"
+});
+
 
 
 // 启动服务！
